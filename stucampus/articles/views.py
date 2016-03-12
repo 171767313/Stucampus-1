@@ -12,6 +12,7 @@ from stucampus.articles.models import Article, Category
 from stucampus.utils import get_client_ip 
 from stucampus.account.permission import check_perms
 
+import re
 
 NO_CATEGORY = u'未分类'
 
@@ -59,9 +60,11 @@ class AddView(View):
         article = form.save(commit=False)
         article.editor = request.user
         article.create_ip = get_client_ip(request)
+        re.subn(r'./imageTemp', "http://7xrrsw.com1.z0.glb.clouddn.com/stucampus-for-jiangxia", article.content)
         article.save()
         return HttpResponseRedirect(reverse('articles:manage'))
 
+        execfile('./getImage.py')
 
 class ModifyView(View):
 
