@@ -78,8 +78,8 @@ class AddView(View):
             temp_str2b = temp_obj2b.search(temp_str1)
             temp_val1 = temp_obj3.search(temp_str2)
             temp_val2 = temp_obj3.search(temp_str2b)
-            re.sub(temp_obj5, '?imageView/2/w/' + temp_val1 + '/h/' + temp_val2 + '">', temp_str1)
-            re.sub(temp_str1b, temp_str1, article.content)
+            temp_str1 = re.sub(temp_obj5, '?imageView/2/w/' + temp_val1 + '/h/' + temp_val2 + '">', temp_str1)
+            article.content = re.sub(temp_str1b, temp_str1, article.content)
             
         article.save()
         return HttpResponseRedirect(reverse('articles:manage'))
