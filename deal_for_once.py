@@ -36,7 +36,7 @@ for deal_target in fileList:
     os.remove(localfile)
     
     f = open(path1 + deal_target, 'w')
-    obj_url = urllib2.Request(url + deal_target + "?imageView/2/w/100/h/100")
+    obj_url = urllib2.Request(url + deal_target)
     content = urllib2.urlopen(obj_url).read()
     f.write(content)
     f.close()

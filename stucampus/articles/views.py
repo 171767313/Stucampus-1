@@ -60,7 +60,27 @@ class AddView(View):
         article = form.save(commit=False)
         article.editor = request.user
         article.create_ip = get_client_ip(request)
-        re.subn(r'./imageTemp', "http://7xrrsw.com1.z0.glb.clouddn.com/stucampus-for-jiangxia", article.content)
+
+        re.sub(r'./imageTemp', "http://7xrrsw.com1.z0.glb.clouddn.com/stucampus-for-jiangxia", article.content)
+        img_id = re.split(',', article.img_list)
+        id_num = len(img_id)
+        i = 0
+        while(i < id_num):
+            temp_obj1 = re.compile('<img id="' + id_num[i] + '.*?>')
+            temp_obj2 = re.compile('value1=".*?"')
+            temp_obj2b = re.compile('value2=".*?"')
+            temp_obj3 = re.compile('[\d]+')
+            temp_obj5 = re.compile('">')
+
+            temp_str1 = temp_obj1.search(article.content)
+            temp_str1b = temp_str1
+            temp_str2 = temp_obj2.search(temp_str1)
+            temp_str2b = temp_obj2b.search(temp_str1)
+            temp_val1 = temp_obj3.search(temp_str2)
+            temp_val2 = temp_obj3.search(temp_str2b)
+            re.sub(temp_obj5, '?imageView/2/w/' + temp_val1 + '/h/' + temp_val2 + '">', temp_str1)
+            re.sub(temp_str1b, temp_str1, article.content)
+            
         article.save()
         return HttpResponseRedirect(reverse('articles:manage'))
 
